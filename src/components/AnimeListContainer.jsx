@@ -1,6 +1,6 @@
 import React from "react";
 import AnimeList from "./AnimeList";
-import { animeList, animeListAdd } from "../actions/actions";
+import { animeListAdd, animeListFetch } from "../actions/actions";
 import { connect } from "react-redux";
 
 const mapStateToProps = state => ({
@@ -8,18 +8,18 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  animeList,
-  animeListAdd
+  animeListAdd,
+  animeListFetch
 };
 
 class AnimeListContainer extends React.Component {
   componentDidMount() {
     setTimeout(this.props.animeListAdd, 10000);
-    this.props.animeList();
+    this.props.animeListFetch();
   }
   render() {
-    console.log(this.props);
-    return <AnimeList animes={this.props.animes} />;
+    const { animes, isFetching } = this.props;
+    return <AnimeList animes={animes} isFetching={isFetching} />;
   }
 }
 
