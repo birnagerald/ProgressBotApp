@@ -3,7 +3,7 @@ import {
   ANIME_LIST_ADD,
   ANIME_LIST_RECEIVED,
   ANIME_LIST_ERROR
-} from "../actions/actions";
+} from "../actions/constants";
 
 export default (state = { animes: null, isFetching: false }, action) => {
   switch (action.type) {
@@ -12,7 +12,6 @@ export default (state = { animes: null, isFetching: false }, action) => {
         ...state,
         isFetching: true
       };
-      console.log(state);
       return state;
     case ANIME_LIST_RECEIVED:
       state = {
@@ -20,7 +19,6 @@ export default (state = { animes: null, isFetching: false }, action) => {
         animes: action.data["hydra:member"],
         isFetching: false
       };
-      console.log(state);
       return state;
     case ANIME_LIST_ERROR:
       return {
@@ -33,7 +31,6 @@ export default (state = { animes: null, isFetching: false }, action) => {
         ...state,
         animes: state.animes ? state.animes.concat(action.data) : state.animes
       };
-      console.log(state);
       return state;
     default:
       return state;

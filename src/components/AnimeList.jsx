@@ -1,25 +1,26 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import Message from "./Message";
 
 const AnimeList = props => {
-  const { animes, isFetching } = props;
-
-  if (isFetching) {
-    return (
-      <div>
-        <i className="fas fa-spinner fa-spin" />
-      </div>
-    );
-  }
+  const { animes } = props;
 
   if (null === animes || 0 === animes.length) {
-    return <div>Aucun anime</div>;
+    return <Message message="Aucun anime enregistré" />;
   }
 
   return (
     <div>
-      <ul>
-        {animes && animes.map(anime => <li key={anime.id}>{anime.title}</li>)}
-      </ul>
+      {animes &&
+        animes.map(anime => (
+          <div className="card mb-3 mt-3 shadow-sm" key={anime.id}>
+            <div className="card-body">
+              <h3>
+                <Link to={`/anime/${anime.id}`}>{anime.title}</Link>
+              </h3>
+            </div>
+          </div>
+        ))}
     </div>
   );
 };
