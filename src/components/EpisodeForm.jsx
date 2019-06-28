@@ -5,31 +5,25 @@ import { customCheckbox } from "./CustomCheckboxInput";
 import { connect } from "react-redux";
 import { episodeAdd } from "../actions/actions";
 
-const mapStateToProps = state => ({
-  ...state.input
-});
-
 const mapDispatchToProps = {
   episodeAdd
 };
 
 class EpisodeForm extends React.Component {
   onSubmit(values) {
-    const { episodeAdd, animeId } = this.props;
-    console.log(
-      episodeAdd(
-        values.number,
-        values.translation,
-        values.time,
-        values.proofreading,
-        values.edition,
-        values.typeset,
-        values.qualityCheck,
-        values.encoding,
-        values.published,
-        animeId
-      )
-    );
+    const { episodeAdd, animeId, reset } = this.props;
+    return episodeAdd(
+      values.number,
+      values.translation,
+      values.time,
+      values.proofreading,
+      values.edition,
+      values.typeset,
+      values.qualityCheck,
+      values.encoding,
+      values.published,
+      animeId
+    ).then(() => reset());
   }
 
   render() {
@@ -59,7 +53,6 @@ class EpisodeForm extends React.Component {
             className="custom-control-input"
             component={customCheckbox}
             type="checkbox"
-            normalize={value => !!value}
           />
 
           <Field
@@ -141,10 +134,20 @@ class EpisodeForm extends React.Component {
 }
 
 export default reduxForm({
-  form: "episodeForm"
+  form: "episodeForm",
+  initialValues: {
+    translation: false,
+    time: false,
+    proofreading: false,
+    edition: false,
+    typeset: false,
+    qualityCheck: false,
+    encoding: false,
+    published: false
+  }
 })(
   connect(
-    mapStateToProps,
+    null,
     mapDispatchToProps
   )(EpisodeForm)
 );

@@ -10,14 +10,7 @@ export const customCheckbox = ({
   meta: { error }
 }) => (
   <div className="custom-control custom-checkbox">
-    <input
-      {...input}
-      value="false"
-      name={name}
-      id={id}
-      type={type}
-      className={className}
-    />
+    <input {...input} name={name} id={id} type={type} className={className} />
 
     <label className="custom-control-label" htmlFor={id}>
       {label}

@@ -20,6 +20,7 @@ import {
   USER_SET_ID
 } from "./constants";
 import { SubmissionError } from "redux-form";
+import { parseApiErrors } from "../apiUtils";
 
 export const animeListRequest = () => ({
   type: ANIME_LIST_REQUEST
@@ -132,7 +133,10 @@ export const episodeAdd = (
         published: published,
         anime: `/api/animes/${animeId}`
       })
-      .then(response => dispatch(episodeAdded(response)));
+      .then(response => dispatch(episodeAdded(response)))
+      .catch(error => {
+        throw new SubmissionError(parseApiErrors(error));
+      });
   };
 };
 
@@ -151,7 +155,7 @@ export const userLoginAttempt = (username, password) => {
       .then(response => dispatch(userLoginSuccess(response.token, response.id)))
       .catch(() => {
         throw new SubmissionError({
-          _error: "Nom d'utilisateur ou Mot de passe incorrect"
+          error: "Nom d'utilisateur ou Mot de passe incorrect"
         });
       });
   };

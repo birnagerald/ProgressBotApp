@@ -2,7 +2,8 @@ import {
   EPISODE_LIST_REQUEST,
   EPISODE_LIST_RECEIVED,
   EPISODE_LIST_ERROR,
-  EPISODE_LIST_UNLOAD
+  EPISODE_LIST_UNLOAD,
+  EPISODE_ADDED
 } from "../actions/constants";
 
 export default (state = { episodeList: null, isFetching: false }, action) => {
@@ -18,6 +19,11 @@ export default (state = { episodeList: null, isFetching: false }, action) => {
         ...state,
         episodeList: action.data["hydra:member"],
         isFetching: false
+      };
+    case EPISODE_ADDED:
+      return {
+        ...state,
+        episodeList: [...state.episodeList, action.episode]
       };
     case EPISODE_LIST_ERROR:
     case EPISODE_LIST_UNLOAD:
