@@ -37,12 +37,14 @@ class LoginForm extends React.Component {
             name="username"
             label="Nom d'utilisateur"
             type="text"
+            className="form-control"
             component={renderField}
           />
           <Field
             name="password"
             label="Mot de passe"
             type="password"
+            className="form-control"
             component={renderField}
           />
           <button type="submit" className="btn btn-primary btn-big btn-block">

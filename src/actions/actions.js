@@ -12,6 +12,7 @@ import {
   EPISODE_LIST_RECEIVED,
   EPISODE_LIST_ERROR,
   EPISODE_LIST_UNLOAD,
+  EPISODE_ADDED,
   USER_LOGIN_SUCCESS,
   USER_PROFILE_REQUEST,
   USER_PROFILE_RECEIVED,
@@ -97,6 +98,41 @@ export const episodeListFetch = id => {
       .get(`/animes/${id}/episodes`)
       .then(response => dispatch(episodeListReceived(response)))
       .catch(error => dispatch(episodeListError(error)));
+  };
+};
+
+export const episodeAdded = episode => ({
+  type: EPISODE_ADDED,
+  episode
+});
+
+export const episodeAdd = (
+  number,
+  translation,
+  time,
+  proofreading,
+  edition,
+  typeset,
+  qualityCheck,
+  encoding,
+  published,
+  animeId
+) => {
+  return dispatch => {
+    return requests
+      .post(`/episodes`, {
+        number: number,
+        translation: translation,
+        time: time,
+        proofreading: proofreading,
+        edition: edition,
+        typeset: typeset,
+        qualityCheck: qualityCheck,
+        encoding: encoding,
+        published: published,
+        anime: `/api/animes/${animeId}`
+      })
+      .then(response => dispatch(episodeAdded(response)));
   };
 };
 

@@ -3,9 +3,11 @@ import EpisodeList from "./EpisodeList";
 import Spinner from "./Spinner";
 import { episodeListFetch, episodeListUnload } from "../actions/actions";
 import { connect } from "react-redux";
+import EpisodeForm from "./EpisodeForm";
 
 const mapStateToProps = state => ({
-  ...state.episodeList
+  ...state.episodeList,
+  isAuthenticated: state.auth.isAuthenticated
 });
 
 const mapDispatchToProps = {
@@ -23,11 +25,16 @@ class EpisodeListContainer extends React.Component {
   }
 
   render() {
-    const { episodeList, isFetching } = this.props;
+    const { episodeList, isFetching, isAuthenticated, animeId } = this.props;
     if (isFetching) {
       return <Spinner />;
     }
-    return <EpisodeList episodeList={episodeList} />;
+    return (
+      <div>
+        <EpisodeList episodeList={episodeList} />
+        {isAuthenticated && <EpisodeForm animeId={animeId} />}
+      </div>
+    );
   }
 }
 
