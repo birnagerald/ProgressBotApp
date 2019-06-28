@@ -4,7 +4,7 @@ import LoginForm from "./LoginForm";
 import AnimeListContainer from "./AnimeListContainer";
 import AnimeContainer from "./AnimeContainer";
 import Header from "./Header";
-import { userProfileFetch, userSetId } from "../actions/actions";
+import { userProfileFetch, userSetId, userLogout } from "../actions/actions";
 import { requests } from "../agent";
 import { connect } from "react-redux";
 
@@ -14,7 +14,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   userProfileFetch,
-  userSetId
+  userSetId,
+  userLogout
 };
 
 class App extends React.Component {
@@ -45,10 +46,14 @@ class App extends React.Component {
   }
 
   render() {
-    const { isAuthenticated, userData } = this.props;
+    const { isAuthenticated, userData, userLogout } = this.props;
     return (
       <div>
-        <Header isAuthenticated={isAuthenticated} userData={userData} />
+        <Header
+          isAuthenticated={isAuthenticated}
+          userData={userData}
+          logout={userLogout}
+        />
         <Switch>
           <Route path="/login" component={LoginForm} />
           <Route path="/anime/:id" component={AnimeContainer} />

@@ -17,7 +17,8 @@ import {
   USER_PROFILE_REQUEST,
   USER_PROFILE_RECEIVED,
   USER_PROFILE_ERROR,
-  USER_SET_ID
+  USER_SET_ID,
+  USER_LOGOUT
 } from "./constants";
 import { SubmissionError } from "redux-form";
 import { parseApiErrors } from "../apiUtils";
@@ -135,6 +136,9 @@ export const episodeAdd = (
       })
       .then(response => dispatch(episodeAdded(response)))
       .catch(error => {
+        if (401 === error.response.status) {
+          return dispatch(userLogout());
+        }
         throw new SubmissionError(parseApiErrors(error));
       });
   };
@@ -161,6 +165,12 @@ export const userLoginAttempt = (username, password) => {
   };
 };
 
+export const userLogout = () => {
+  return {
+    type: USER_LOGOUT
+  };
+};
+
 export const userSetId = userId => {
   return {
     type: USER_SET_ID,
@@ -182,10 +192,10 @@ export const userProfileReceived = (userId, userData) => {
   };
 };
 
-export const userProfileError = error => {
+export const userProfileError = userId => {
   return {
     type: USER_PROFILE_ERROR,
-    error
+    userId
   };
 };
 
@@ -195,7 +205,7 @@ export const userProfileFetch = userId => {
     return requests
       .get(`/users/${userId}`, true)
       .then(response => dispatch(userProfileReceived(userId, response)))
-      .catch(error => dispatch(userProfileError(error)));
+      .catch(() => dispatch(userProfileError(userId)));
   };
 };
 

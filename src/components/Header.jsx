@@ -1,28 +1,41 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Header = props => {
-  const { isAuthenticated, userData } = props;
-  return (
-    <nav className="navbar navbar-expand-lg navbar-ligh bg-light">
-      <Link to="/" className="navbar-brand">
-        React Progress-bot
-      </Link>
-      <span className="navbar-text">
-        {isAuthenticated ? (
-          <span>
-            {userData === null ? (
-              <i className="fas fa-spinner fa-spin" />
-            ) : (
-              userData.username
-            )}
-          </span>
-        ) : (
-          <Link to="/login">sign-in</Link>
-        )}
-      </span>
-    </nav>
-  );
-};
+export default class Header extends React.Component {
+  renderUser() {
+    const { userData, logout } = this.props;
 
-export default Header;
+    if (null === userData) {
+      return <i className="fas fa-spinner fa-spin" />;
+    }
+
+    return (
+      <span>
+        Hello {userData.username},&nbsp;
+        <button className="btn btn-link btn-sm" href="#" onClick={logout}>
+          Déconnexion
+        </button>
+      </span>
+    );
+  }
+
+  render() {
+    const { isAuthenticated } = this.props;
+
+    return (
+      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <Link to="/" className="navbar-brand">
+          React Progress Bot
+        </Link>
+
+        <span className="navbar-text">
+          {isAuthenticated ? (
+            this.renderUser()
+          ) : (
+            <Link to="/login">Sign-in</Link>
+          )}
+        </span>
+      </nav>
+    );
+  }
+}
