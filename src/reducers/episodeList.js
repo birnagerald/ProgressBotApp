@@ -3,7 +3,8 @@ import {
   EPISODE_LIST_RECEIVED,
   EPISODE_LIST_ERROR,
   EPISODE_LIST_UNLOAD,
-  EPISODE_ADDED
+  EPISODE_ADDED,
+  EPISODE_REMOVED
 } from "../actions/constants";
 
 export default (state = { episodeList: null, isFetching: false }, action) => {
@@ -24,6 +25,13 @@ export default (state = { episodeList: null, isFetching: false }, action) => {
       return {
         ...state,
         episodeList: [...state.episodeList, action.episode]
+      };
+    case EPISODE_REMOVED:
+      return {
+        ...state,
+        episodeList: state.episodeList.filter(
+          episode => episode.id !== action.episodeId
+        )
       };
     case EPISODE_LIST_ERROR:
     case EPISODE_LIST_UNLOAD:

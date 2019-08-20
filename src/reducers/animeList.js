@@ -2,7 +2,8 @@ import {
   ANIME_LIST_REQUEST,
   ANIME_LIST_ADD,
   ANIME_LIST_RECEIVED,
-  ANIME_LIST_ERROR
+  ANIME_LIST_ERROR,
+  ANIME_REMOVED
 } from "../actions/constants";
 
 export default (state = { animes: null, isFetching: false }, action) => {
@@ -33,6 +34,11 @@ export default (state = { animes: null, isFetching: false }, action) => {
         animes: [...state.animes, action.anime]
       };
       return state;
+    case ANIME_REMOVED:
+      return {
+        ...state,
+        animes: state.animes.filter(anime => anime.id !== action.animeId)
+      };
     default:
       return state;
   }

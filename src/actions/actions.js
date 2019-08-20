@@ -8,11 +8,13 @@ import {
   ANIME_RECEIVED,
   ANIME_ERROR,
   ANIME_UNLOAD,
+  ANIME_REMOVED,
   EPISODE_LIST_REQUEST,
   EPISODE_LIST_RECEIVED,
   EPISODE_LIST_ERROR,
   EPISODE_LIST_UNLOAD,
   EPISODE_ADDED,
+  EPISODE_REMOVED,
   USER_LOGIN_SUCCESS,
   USER_PROFILE_REQUEST,
   USER_PROFILE_RECEIVED,
@@ -36,12 +38,6 @@ export const animeListReceived = data => ({
   type: ANIME_LIST_RECEIVED,
   data
 });
-
-export const animeListDelete = id => {
-  return _dispatch => {
-    return requests.delete(`/animes/${id}`);
-  };
-};
 
 export const animeListFetch = () => {
   return dispatch => {
@@ -99,12 +95,6 @@ export const episodeListUnload = () => ({
   type: EPISODE_LIST_UNLOAD
 });
 
-export const episodeListDelete = id => {
-  return _dispatch => {
-    return requests.delete(`/episodes/${id}`);
-  };
-};
-
 export const episodeListFetch = id => {
   return dispatch => {
     dispatch(episodeListRequest());
@@ -155,6 +145,28 @@ export const episodeAdd = (
       });
   };
 };
+
+export const episodeDelete = id => dispatch => {
+  return requests
+    .delete(`/episodes/${id}`)
+    .then(() => dispatch(episodeRemoved(id)));
+};
+
+export const episodeRemoved = id => ({
+  type: EPISODE_REMOVED,
+  episodeId: id
+});
+
+export const animeDelete = id => dispatch => {
+  return requests
+    .delete(`/animes/${id}`)
+    .then(() => dispatch(animeRemoved(id)));
+};
+
+export const animeRemoved = id => ({
+  type: ANIME_REMOVED,
+  animeId: id
+});
 
 export const userLoginSuccess = (token, userId) => {
   return {

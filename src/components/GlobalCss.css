@@ -1,0 +1,12 @@
+.container-fluid {
+  padding: 0;
+}
+
+.inputCustom {
+  width: 25%;
+  margin: auto;
+}
+
+.card-text {
+  padding-top: 16px;
+}

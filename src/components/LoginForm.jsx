@@ -15,7 +15,7 @@ const mapDispatchToProps = {
 class LoginForm extends React.Component {
   componentDidUpdate(prevProps) {
     if (prevProps.token !== this.props.token) {
-      this.props.history.push("/");
+      this.props.history.push("/dashboard");
     }
   }
 
@@ -35,20 +35,20 @@ class LoginForm extends React.Component {
         >
           <Field
             name="username"
-            label="Nom d'utilisateur"
+            label="Username"
             type="text"
-            className="form-control"
+            className="form-control inputCustom"
             component={renderField}
           />
           <Field
             name="password"
-            label="Mot de passe"
+            label="Password"
             type="password"
-            className="form-control"
+            className="form-control inputCustom"
             component={renderField}
           />
-          <button type="submit" className="btn btn-primary btn-big btn-block">
-            Se connecter
+          <button type="submit" className="btn btn-primary">
+            Login-in
           </button>
         </form>
       </div>

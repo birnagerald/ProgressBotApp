@@ -1,7 +1,7 @@
 import React from "react";
 import AnimeList from "./AnimeList";
 import Spinner from "./Spinner";
-import { animeListFetch, animeListDelete } from "../actions/actions";
+import { animeListFetch, animeDelete } from "../actions/actions";
 import { connect } from "react-redux";
 
 const mapStateToProps = state => ({
@@ -10,7 +10,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   animeListFetch,
-  animeListDelete
+  animeDelete
 };
 
 class AnimeListContainer extends React.Component {
@@ -19,11 +19,11 @@ class AnimeListContainer extends React.Component {
   }
 
   render() {
-    const { animes, isFetching, animeListDelete } = this.props;
+    const { animes, isFetching, animeDelete } = this.props;
     if (isFetching) {
       return <Spinner />;
     }
-    return <AnimeList animes={animes} deleteHandler={animeListDelete} />;
+    return <AnimeList animes={animes} deleteHandler={animeDelete} />;
   }
 }
 

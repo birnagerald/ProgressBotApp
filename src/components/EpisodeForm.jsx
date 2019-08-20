@@ -4,6 +4,7 @@ import { renderField } from "../form";
 import { customCheckbox } from "./CustomCheckboxInput";
 import { connect } from "react-redux";
 import { episodeAdd } from "../actions/actions";
+import "./EpisodeForm.css";
 
 const mapDispatchToProps = {
   episodeAdd
@@ -41,7 +42,7 @@ class EpisodeForm extends React.Component {
             label="Numéro"
             name="number"
             component={renderField}
-            className="form-control"
+            className="form-control inputCustom"
             type="number"
             parse={value => Number(value)}
           />

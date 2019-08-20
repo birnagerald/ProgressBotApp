@@ -16,7 +16,7 @@ const AnimeList = props => {
       <TransitionGroup>
         {animes.map(anime => {
           return (
-            <CSSTransition key={anime.id} timeout={500} classNames="fade">
+            <CSSTransition key={anime.id} timeout={1000} classNames="fade">
               <div className="card mb-3 mt-3 shadow-sm">
                 <div className="card-body d-flex justify-content-between">
                   <h3>
@@ -25,7 +25,7 @@ const AnimeList = props => {
 
                   <button
                     className="btn btn-outline-danger btn-sm"
-                    onClick={function onAnimeListDeleteClick(event) {
+                    onClick={function onAnimeDeleteClick(event) {
                       event.preventDefault();
                       deleteHandler(anime.id);
                     }}

@@ -13,7 +13,7 @@ export default class Header extends React.Component {
       <span>
         Hello {userData.username},&nbsp;
         <button className="btn btn-link btn-sm" href="#" onClick={logout}>
-          Déconnexion
+          Logout
         </button>
       </span>
     );
@@ -23,17 +23,13 @@ export default class Header extends React.Component {
     const { isAuthenticated } = this.props;
 
     return (
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <nav className="navbar navbar-light bg-light">
         <Link to="/" className="navbar-brand">
           React Progress Bot
         </Link>
 
         <span className="navbar-text">
-          {isAuthenticated ? (
-            this.renderUser()
-          ) : (
-            <Link to="/login">Sign-in</Link>
-          )}
+          {isAuthenticated ? this.renderUser() : <Link to="/login">Login</Link>}
         </span>
       </nav>
     );

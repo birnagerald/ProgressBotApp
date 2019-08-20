@@ -4,9 +4,12 @@ import LoginForm from "./LoginForm";
 import AnimeListContainer from "./AnimeListContainer";
 import AnimeContainer from "./AnimeContainer";
 import Header from "./Header";
+import Footer from "./Footer";
+import Main from "./Main";
 import { userProfileFetch, userSetId, userLogout } from "../actions/actions";
 import { requests } from "../agent";
 import { connect } from "react-redux";
+import "./GlobalCss.css";
 
 const mapStateToProps = state => ({
   ...state.auth
@@ -57,8 +60,10 @@ class App extends React.Component {
         <Switch>
           <Route path="/login" component={LoginForm} />
           <Route path="/anime/:id" component={AnimeContainer} />
-          <Route path="/" component={AnimeListContainer} />
+          <Route path="/dashboard" component={AnimeListContainer} />
+          <Route path="/" component={Main} />
         </Switch>
+        <Footer />
       </div>
     );
   }

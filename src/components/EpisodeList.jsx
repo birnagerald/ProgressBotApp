@@ -15,7 +15,7 @@ const EpisodeList = props => {
       <TransitionGroup>
         {episodeList.map(episode => {
           return (
-            <CSSTransition key={episode.id} timeout={500} classNames="fade">
+            <CSSTransition key={episode.id} timeout={1000} classNames="fade">
               <div className="card-body border-bottom d-flex justify-content-between">
                 <p className="card-text">
                   Épisode {episode.number} |{" "}
