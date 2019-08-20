@@ -29,7 +29,8 @@ export default (state = { animes: null, isFetching: false }, action) => {
     case ANIME_LIST_ADD:
       state = {
         ...state,
-        animes: state.animes ? state.animes.concat(action.data) : state.animes
+        // animes: state.animes ? state.animes.concat(action.data) : state.animes
+        animes: [...state.animes, action.anime]
       };
       return state;
     default:

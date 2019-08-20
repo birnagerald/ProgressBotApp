@@ -37,6 +37,12 @@ export const animeListReceived = data => ({
   data
 });
 
+export const animeListDelete = id => {
+  return _dispatch => {
+    return requests.delete(`/animes/${id}`);
+  };
+};
+
 export const animeListFetch = () => {
   return dispatch => {
     dispatch(animeListRequest());
@@ -92,6 +98,12 @@ export const episodeListReceived = data => ({
 export const episodeListUnload = () => ({
   type: EPISODE_LIST_UNLOAD
 });
+
+export const episodeListDelete = id => {
+  return _dispatch => {
+    return requests.delete(`/episodes/${id}`);
+  };
+};
 
 export const episodeListFetch = id => {
   return dispatch => {

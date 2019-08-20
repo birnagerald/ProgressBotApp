@@ -1,7 +1,11 @@
 import React from "react";
 import EpisodeList from "./EpisodeList";
 import Spinner from "./Spinner";
-import { episodeListFetch, episodeListUnload } from "../actions/actions";
+import {
+  episodeListFetch,
+  episodeListUnload,
+  episodeListDelete
+} from "../actions/actions";
 import { connect } from "react-redux";
 import EpisodeForm from "./EpisodeForm";
 
@@ -12,7 +16,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   episodeListFetch,
-  episodeListUnload
+  episodeListUnload,
+  episodeListDelete
 };
 
 class EpisodeListContainer extends React.Component {
@@ -25,13 +30,22 @@ class EpisodeListContainer extends React.Component {
   }
 
   render() {
-    const { episodeList, isFetching, isAuthenticated, animeId } = this.props;
+    const {
+      episodeList,
+      isFetching,
+      isAuthenticated,
+      animeId,
+      episodeListDelete
+    } = this.props;
     if (isFetching) {
       return <Spinner />;
     }
     return (
       <div>
-        <EpisodeList episodeList={episodeList} />
+        <EpisodeList
+          episodeList={episodeList}
+          deleteHandler={episodeListDelete}
+        />
         {isAuthenticated && <EpisodeForm animeId={animeId} />}
       </div>
     );
