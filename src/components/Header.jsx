@@ -23,11 +23,15 @@ export default class Header extends React.Component {
     const { isAuthenticated } = this.props;
 
     return (
-      <nav className="navbar navbar-light bg-light">
+      <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <Link to="/" className="navbar-brand">
           React Progress Bot
         </Link>
-
+        <div className="collapse navbar-collapse">
+          <a className="nav-item nav-link" href="/dashboard">
+            Dashboard
+          </a>
+        </div>
         <span className="navbar-text">
           {isAuthenticated ? this.renderUser() : <Link to="/login">Login</Link>}
         </span>

@@ -25,7 +25,7 @@ class EpisodeListContainer extends React.Component {
     this.props.episodeListFetch(this.props.animeId);
   }
 
-  componentWillUnmount() {
+  UNSAFE_componentWillMount() {
     this.props.episodeListUnload();
   }
 

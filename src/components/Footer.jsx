@@ -16,7 +16,7 @@ export default class Header extends React.Component {
             </div>
             <div className="col-md-8">
               <p className="sub-footer-text text-center">
-                Designed & Code by Gérald Birna All rights réservés ©
+                Designed & Code by Gérald Birna All rights reserved ©
               </p>
             </div>
           </div>

@@ -38,87 +38,88 @@ class EpisodeForm extends React.Component {
           className="mt-4"
           onSubmit={handleSubmit(this.onSubmit.bind(this))}
         >
-          <Field
-            label="Numéro"
-            name="number"
-            component={renderField}
-            className="form-control inputCustom"
-            type="number"
-            parse={value => Number(value)}
-          />
+          <div className="form-group">
+            <Field
+              label="Numéro"
+              name="number"
+              component={renderField}
+              className="form-control inputCustom"
+              type="number"
+              parse={value => Number(value)}
+            />
 
-          <Field
-            label="Traduction"
-            name="translation"
-            id="translation"
-            className="custom-control-input"
-            component={customCheckbox}
-            type="checkbox"
-          />
+            <Field
+              label="Traduction"
+              name="translation"
+              id="translation"
+              className="custom-control-input"
+              component={customCheckbox}
+              type="checkbox"
+            />
 
-          <Field
-            label="Time"
-            name="time"
-            id="time"
-            className="custom-control-input"
-            component={customCheckbox}
-            type="checkbox"
-          />
-          <Field
-            label="Check"
-            name="proofreading"
-            id="proofreading"
-            className="custom-control-input"
-            component={customCheckbox}
-            type="checkbox"
-          />
-          <Field
-            label="Adapt"
-            name="edition"
-            id="edition"
-            className="custom-control-input"
-            component={customCheckbox}
-            type="checkbox"
-          />
-          <Field
-            label="Edit"
-            name="typeset"
-            id="typeset"
-            className="custom-control-input"
-            component={customCheckbox}
-            type="checkbox"
-          />
-          <Field
-            label="QCheck"
-            name="qualityCheck"
-            id="qualityCheck"
-            className="custom-control-input"
-            component={customCheckbox}
-            type="checkbox"
-          />
-          <Field
-            label="Enco"
-            name="encoding"
-            id="encoding"
-            className="custom-control-input"
-            component={customCheckbox}
-            type="checkbox"
-          />
-          <Field
-            label="Publication"
-            name="published"
-            id="published"
-            className="custom-control-input"
-            component={customCheckbox}
-            type="checkbox"
-          />
-
+            <Field
+              label="Time"
+              name="time"
+              id="time"
+              className="custom-control-input"
+              component={customCheckbox}
+              type="checkbox"
+            />
+            <Field
+              label="Check"
+              name="proofreading"
+              id="proofreading"
+              className="custom-control-input"
+              component={customCheckbox}
+              type="checkbox"
+            />
+            <Field
+              label="Adapt"
+              name="edition"
+              id="edition"
+              className="custom-control-input"
+              component={customCheckbox}
+              type="checkbox"
+            />
+            <Field
+              label="Edit"
+              name="typeset"
+              id="typeset"
+              className="custom-control-input"
+              component={customCheckbox}
+              type="checkbox"
+            />
+            <Field
+              label="QCheck"
+              name="qualityCheck"
+              id="qualityCheck"
+              className="custom-control-input"
+              component={customCheckbox}
+              type="checkbox"
+            />
+            <Field
+              label="Enco"
+              name="encoding"
+              id="encoding"
+              className="custom-control-input"
+              component={customCheckbox}
+              type="checkbox"
+            />
+            <Field
+              label="Publication"
+              name="published"
+              id="published"
+              className="custom-control-input"
+              component={customCheckbox}
+              type="checkbox"
+            />
+          </div>
           <button
             type="submit"
             disabled={pristine || submitting}
             className="btn btn-primary"
           >
-            Ajouter un épisode
+            Add Episode
           </button>
           <button
             type="button"

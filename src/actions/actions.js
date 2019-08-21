@@ -2,13 +2,13 @@ import { requests } from "../agent";
 import {
   ANIME_LIST_REQUEST,
   ANIME_LIST_RECEIVED,
-  ANIME_LIST_ADD,
   ANIME_LIST_ERROR,
   ANIME_REQUEST,
   ANIME_RECEIVED,
   ANIME_ERROR,
   ANIME_UNLOAD,
   ANIME_REMOVED,
+  ANIME_ADDED,
   EPISODE_LIST_REQUEST,
   EPISODE_LIST_RECEIVED,
   EPISODE_LIST_ERROR,
@@ -76,6 +76,41 @@ export const animeFetch = id => {
       .catch(error => dispatch(animeError(error)));
   };
 };
+
+export const animeAdded = anime => ({
+  type: ANIME_ADDED,
+  anime
+});
+
+export const animeAdd = (title, totalEpisode, coverImage, OwnerId) => {
+  return dispatch => {
+    return requests
+      .post(`/animes`, {
+        title: title,
+        totalEpisode: totalEpisode,
+        coverImage: coverImage,
+        owner: `/api/users/${OwnerId}`
+      })
+      .then(response => dispatch(animeAdded(response)))
+      .catch(error => {
+        if (401 === error.response.status) {
+          return dispatch(userLogout());
+        }
+        throw new SubmissionError(parseApiErrors(error));
+      });
+  };
+};
+
+export const animeDelete = id => dispatch => {
+  return requests
+    .delete(`/animes/${id}`)
+    .then(() => dispatch(animeRemoved(id)));
+};
+
+export const animeRemoved = id => ({
+  type: ANIME_REMOVED,
+  animeId: id
+});
 
 export const episodeListRequest = () => ({
   type: EPISODE_LIST_REQUEST
@@ -157,17 +192,6 @@ export const episodeRemoved = id => ({
   episodeId: id
 });
 
-export const animeDelete = id => dispatch => {
-  return requests
-    .delete(`/animes/${id}`)
-    .then(() => dispatch(animeRemoved(id)));
-};
-
-export const animeRemoved = id => ({
-  type: ANIME_REMOVED,
-  animeId: id
-});
-
 export const userLoginSuccess = (token, userId) => {
   return {
     type: USER_LOGIN_SUCCESS,
@@ -232,11 +256,3 @@ export const userProfileFetch = userId => {
       .catch(() => dispatch(userProfileError(userId)));
   };
 };
-
-export const animeListAdd = () => ({
-  type: ANIME_LIST_ADD,
-  data: {
-    id: Math.floor(Math.random() * 100 + 3),
-    title: "A new Anime"
-  }
-});

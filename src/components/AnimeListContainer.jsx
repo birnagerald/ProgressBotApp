@@ -3,9 +3,11 @@ import AnimeList from "./AnimeList";
 import Spinner from "./Spinner";
 import { animeListFetch, animeDelete } from "../actions/actions";
 import { connect } from "react-redux";
+import AnimeForm from "./AnimeForm";
 
 const mapStateToProps = state => ({
-  ...state.animeList
+  ...state.animeList,
+  isAuthenticated: state.auth.isAuthenticated
 });
 
 const mapDispatchToProps = {
@@ -15,15 +17,22 @@ const mapDispatchToProps = {
 
 class AnimeListContainer extends React.Component {
   componentDidMount() {
-    this.props.animeListFetch();
+    this.props.animeListFetch(this.props.ownerId);
   }
 
   render() {
-    const { animes, isFetching, animeDelete } = this.props;
+    const { animes, isFetching, animeDelete, isAuthenticated } = this.props;
     if (isFetching) {
       return <Spinner />;
     }
-    return <AnimeList animes={animes} deleteHandler={animeDelete} />;
+    return (
+      <div>
+        <AnimeList animes={animes} deleteHandler={animeDelete} />
+        {isAuthenticated && (
+          <AnimeForm ownerId={window.localStorage.getItem("userId")} />
+        )}
+      </div>
+    );
   }
 }
 

@@ -1,9 +1,9 @@
 import {
   ANIME_LIST_REQUEST,
-  ANIME_LIST_ADD,
   ANIME_LIST_RECEIVED,
   ANIME_LIST_ERROR,
-  ANIME_REMOVED
+  ANIME_REMOVED,
+  ANIME_ADDED
 } from "../actions/constants";
 
 export default (state = { animes: null, isFetching: false }, action) => {
@@ -27,13 +27,11 @@ export default (state = { animes: null, isFetching: false }, action) => {
         isFetching: false,
         animes: null
       };
-    case ANIME_LIST_ADD:
-      state = {
+    case ANIME_ADDED:
+      return {
         ...state,
-        // animes: state.animes ? state.animes.concat(action.data) : state.animes
         animes: [...state.animes, action.anime]
       };
-      return state;
     case ANIME_REMOVED:
       return {
         ...state,
