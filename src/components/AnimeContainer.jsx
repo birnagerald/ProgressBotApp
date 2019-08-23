@@ -1,6 +1,6 @@
 import React from "react";
 import Anime from "./Anime";
-import Spinner from "./Spinner";
+import Loading from "./Loading";
 import { animeFetch, animeUnload } from "../actions/actions";
 import { connect } from "react-redux";
 import EpisodeListContainer from "./EpisodeListContainer";
@@ -26,12 +26,17 @@ class AnimeContainer extends React.Component {
   render() {
     const { anime, isFetching } = this.props;
     if (isFetching) {
-      return <Spinner />;
+      return <Loading />;
     }
     return (
       <div>
         <Anime anime={anime} />
-        {anime && <EpisodeListContainer animeId={this.props.match.params.id} />}
+        {anime && (
+          <EpisodeListContainer
+            animeId={this.props.match.params.id}
+            anime={anime}
+          />
+        )}
       </div>
     );
   }

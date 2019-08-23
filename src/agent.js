@@ -34,5 +34,11 @@ export const requests = {
       .use(tokenPlugin(secured))
       .then(responseBody);
   },
+  postCustom: (url, body = null, secured = true) => {
+    return superagent
+      .post(`${url}`, body)
+      .use(tokenPlugin(secured))
+      .then(responseBody);
+  },
   setToken: newJwtToken => (token = newJwtToken)
 };

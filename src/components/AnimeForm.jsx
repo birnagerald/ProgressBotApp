@@ -52,7 +52,7 @@ class AnimeForm extends React.Component {
 
             <Field
               label="Cover Image"
-              name="cover_image"
+              name="coverImage"
               component={renderField}
               className="form-control"
               type="text"

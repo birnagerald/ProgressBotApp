@@ -1,6 +1,6 @@
 import React from "react";
 import AnimeList from "./AnimeList";
-import Spinner from "./Spinner";
+import Loading from "./Loading";
 import { animeListFetch, animeDelete } from "../actions/actions";
 import { connect } from "react-redux";
 import AnimeForm from "./AnimeForm";
@@ -23,7 +23,7 @@ class AnimeListContainer extends React.Component {
   render() {
     const { animes, isFetching, animeDelete, isAuthenticated } = this.props;
     if (isFetching) {
-      return <Spinner />;
+      return <Loading />;
     }
     return (
       <div>

@@ -192,6 +192,75 @@ export const episodeRemoved = id => ({
   episodeId: id
 });
 
+export const episodeSync = (episode, anime) => {
+  const timestamp = new Date(); // This would be the timestamp you want to format
+  return requests
+    .postCustom(
+      `https://discordapp.com/api/webhooks/614430341456986112/pc1Ac720a98QQktlEqyZmMxYo0NZimhahc1vyqnL7mTnqYi85EVUN0S-7WpQbIbtsSFi`,
+      {
+        embeds: [
+          {
+            description: `Épisode ${episode.number}/${anime.totalEpisode}`,
+            color: 14177041,
+            timestamp: timestamp.toISOString(),
+            footer: {
+              icon_url: `https://cdn.discordapp.com/emojis/469823712720322560.png?v=1`,
+              text: `@KnK`
+            },
+            thumbnail: {
+              url: `https://images-ext-1.discordapp.net/external/A8S3rmXCFjMYo3Fgixt-4qb48Jbp89fj7naH1etgl2o/https/pbs.twimg.com/media/D3___vjXoAA93oz.jpg%3Alarge`
+            },
+            image: {
+              url:
+                "https://images-ext-2.discordapp.net/external/I0AngD3QRYISq35VqQ3bK84JrqXKHYdGhlII49eTeoY/https/kodoku-no-kawarini.moe/assets/img/caroltuesdayaffiche.jpg"
+            },
+            author: {
+              name: anime.title,
+              url: `https://kodoku-no-kawarini.moe/carole-and-tuesday.php`,
+              icon_url: `https://kodoku-no-kawarini.moe/assets/img/tuturu.png`
+            },
+            fields: [
+              {
+                name: `Avancement:`,
+                value: `\n**Trad** : ${
+                  episode.translation ? ":white_check_mark:" : ":x:"
+                } \n**Time** : ${
+                  episode.time ? ":white_check_mark:" : ":x:"
+                }\n**Check** : ${
+                  episode.proofreading ? ":white_check_mark:" : ":x:"
+                }\n**Adapt** : ${
+                  episode.edition ? ":white_check_mark:" : ":x:"
+                }`,
+                inline: true
+              },
+              {
+                name: `Publié: ${
+                  episode.published ? ":white_check_mark:" : ":x:"
+                }`,
+                value: `\n**Edit** : ${
+                  episode.typeset ? ":white_check_mark:" : ":x:"
+                }\n**Qcheck** : ${
+                  episode.qualityCheck ? ":white_check_mark:" : ":x:"
+                }\n**Enco** : ${
+                  episode.encoding ? ":white_check_mark:" : ":x:"
+                }`,
+                inline: true
+              }
+            ]
+          }
+        ]
+      }
+    )
+    .then(res => {
+      res = res.status;
+      // res.body, res.headers, res.status
+    })
+    .catch(err => {
+      // err.message, err.response
+      err = err.status;
+    });
+};
+
 export const userLoginSuccess = (token, userId) => {
   return {
     type: USER_LOGIN_SUCCESS,

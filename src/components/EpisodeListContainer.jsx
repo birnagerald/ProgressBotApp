@@ -1,10 +1,11 @@
 import React from "react";
 import EpisodeList from "./EpisodeList";
-import Spinner from "./Spinner";
+import Loading from "./Loading";
 import {
   episodeListFetch,
   episodeListUnload,
-  episodeDelete
+  episodeDelete,
+  episodeSync
 } from "../actions/actions";
 import { connect } from "react-redux";
 import EpisodeForm from "./EpisodeForm";
@@ -17,12 +18,13 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   episodeListFetch,
   episodeListUnload,
-  episodeDelete
+  episodeDelete,
+  episodeSync
 };
 
 class EpisodeListContainer extends React.Component {
   componentDidMount() {
-    this.props.episodeListFetch(this.props.animeId);
+    this.props.episodeListFetch(this.props.animeId, this.props.anime);
   }
 
   UNSAFE_componentWillMount() {
@@ -35,14 +37,20 @@ class EpisodeListContainer extends React.Component {
       isFetching,
       isAuthenticated,
       animeId,
+      anime,
       episodeDelete
     } = this.props;
     if (isFetching) {
-      return <Spinner />;
+      return <Loading />;
     }
     return (
       <div>
-        <EpisodeList episodeList={episodeList} deleteHandler={episodeDelete} />
+        <EpisodeList
+          episodeList={episodeList}
+          deleteHandler={episodeDelete}
+          syncHandler={episodeSync}
+          anime={anime}
+        />
         {isAuthenticated && <EpisodeForm animeId={animeId} />}
       </div>
     );

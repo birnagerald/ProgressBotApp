@@ -1,21 +1,20 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Navbar, Nav, Button } from "react-bootstrap";
 
 export default class Header extends React.Component {
   renderUser() {
     const { userData, logout } = this.props;
 
     if (null === userData) {
-      return <i className="fas fa-spinner fa-spin" />;
+      return <i className="fas fa-Loading fa-spin" />;
     }
 
     return (
-      <span>
-        Hello {userData.username},&nbsp;
-        <button className="btn btn-link btn-sm" href="#" onClick={logout}>
+      <Nav.Item>
+        <Button variant="link" onClick={logout}>
           Logout
-        </button>
-      </span>
+        </Button>
+      </Nav.Item>
     );
   }
 
@@ -23,19 +22,23 @@ export default class Header extends React.Component {
     const { isAuthenticated } = this.props;
 
     return (
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <Link to="/" className="navbar-brand">
-          React Progress Bot
-        </Link>
-        <div className="collapse navbar-collapse">
-          <a className="nav-item nav-link" href="/dashboard">
-            Dashboard
-          </a>
-        </div>
-        <span className="navbar-text">
-          {isAuthenticated ? this.renderUser() : <Link to="/login">Login</Link>}
-        </span>
-      </nav>
+      <Navbar bg="light" expand="lg">
+        <Navbar.Brand href="#home">React Progress Bot</Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="mr-auto">
+            <Nav.Item>
+              <Nav.Link href="/dashboard">Dashboard</Nav.Link>
+            </Nav.Item>
+
+            {isAuthenticated ? (
+              this.renderUser()
+            ) : (
+              <Nav.Link href="/login">Login</Nav.Link>
+            )}
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
     );
   }
 }

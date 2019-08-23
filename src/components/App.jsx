@@ -10,6 +10,7 @@ import { userProfileFetch, userSetId, userLogout } from "../actions/actions";
 import { requests } from "../agent";
 import { connect } from "react-redux";
 import "./GlobalCss.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const mapStateToProps = state => ({
   ...state.auth
