@@ -9,18 +9,24 @@ import {
   ANIME_UNLOAD,
   ANIME_REMOVED,
   ANIME_ADDED,
+  ANIME_UPDATED,
   EPISODE_LIST_REQUEST,
   EPISODE_LIST_RECEIVED,
   EPISODE_LIST_ERROR,
   EPISODE_LIST_UNLOAD,
   EPISODE_ADDED,
   EPISODE_REMOVED,
+  EPISODE_REQUEST,
+  EPISODE_RECEIVED,
+  EPISODE_ERROR,
+  EPISODE_UNLOAD,
   USER_LOGIN_SUCCESS,
   USER_PROFILE_REQUEST,
   USER_PROFILE_RECEIVED,
   USER_PROFILE_ERROR,
   USER_SET_ID,
-  USER_LOGOUT
+  USER_LOGOUT,
+  EPISODE_UPDATED
 } from "./constants";
 import { SubmissionError } from "redux-form";
 import { parseApiErrors } from "../apiUtils";
@@ -101,6 +107,29 @@ export const animeAdd = (title, totalEpisode, coverImage, OwnerId) => {
   };
 };
 
+export const animeUpdated = anime => ({
+  type: ANIME_UPDATED,
+  anime
+});
+
+export const animeUpdate = (title, totalEpisode, coverImage, OwnerId, id) => {
+  return dispatch => {
+    return requests
+      .put(`/animes/${id}`, {
+        title: title,
+        totalEpisode: totalEpisode,
+        coverImage: coverImage,
+        owner: `/api/users/${OwnerId}`
+      })
+      .then(response => dispatch(animeUpdated(response)))
+      .catch(error => {
+        if (401 === error.response) {
+          return dispatch(userLogout());
+        }
+      });
+  };
+};
+
 export const animeDelete = id => dispatch => {
   return requests
     .delete(`/animes/${id}`)
@@ -137,6 +166,34 @@ export const episodeListFetch = id => {
       .get(`/animes/${id}/episodes`)
       .then(response => dispatch(episodeListReceived(response)))
       .catch(error => dispatch(episodeListError(error)));
+  };
+};
+
+export const episodeRequest = () => ({
+  type: EPISODE_REQUEST
+});
+
+export const episodeError = error => ({
+  type: EPISODE_ERROR,
+  error
+});
+
+export const episodeReceived = data => ({
+  type: EPISODE_RECEIVED,
+  data
+});
+
+export const episodeUnload = () => ({
+  type: EPISODE_UNLOAD
+});
+
+export const episodeFetch = id => {
+  return dispatch => {
+    dispatch(episodeRequest());
+    return requests
+      .get(`/episodes/${id}`)
+      .then(response => dispatch(episodeReceived(response)))
+      .catch(error => dispatch(episodeError(error)));
   };
 };
 
@@ -177,6 +234,47 @@ export const episodeAdd = (
           return dispatch(userLogout());
         }
         throw new SubmissionError(parseApiErrors(error));
+      });
+  };
+};
+
+export const episodeUpdated = episode => ({
+  type: EPISODE_UPDATED,
+  episode
+});
+
+export const episodeUpdate = (
+  number,
+  translation,
+  time,
+  proofreading,
+  edition,
+  typeset,
+  qualityCheck,
+  encoding,
+  published,
+  animeId,
+  id
+) => {
+  return dispatch => {
+    return requests
+      .put(`/episodes/${id}`, {
+        number: number,
+        translation: translation,
+        time: time,
+        proofreading: proofreading,
+        edition: edition,
+        typeset: typeset,
+        qualityCheck: qualityCheck,
+        encoding: encoding,
+        published: published,
+        anime: `/api/animes/${animeId}`
+      })
+      .then(response => dispatch(episodeUpdated(response)))
+      .catch(error => {
+        if (401 === error.response) {
+          return dispatch(userLogout());
+        }
       });
   };
 };

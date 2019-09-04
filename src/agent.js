@@ -34,6 +34,12 @@ export const requests = {
       .use(tokenPlugin(secured))
       .then(responseBody);
   },
+  put: (url, body = null, secured = true) => {
+    return superagent
+      .put(`${API_ROOT}${url}`, body)
+      .use(tokenPlugin(secured))
+      .then(responseBody);
+  },
   postCustom: (url, body = null, secured = true) => {
     return superagent
       .post(`${url}`, body)

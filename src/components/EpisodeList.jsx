@@ -32,13 +32,17 @@ const EpisodeList = props => {
                       variant="outline-dark mr-2"
                       onClick={function onEpisodeListSyncClick(event) {
                         event.preventDefault();
-                        console.log(anime);
                         syncHandler(episode, anime);
                       }}
                     >
                       Sync
                     </Button>
-
+                    <Button
+                      variant="outline-info"
+                      href={`${anime.id}/episode/update/${episode.id}`}
+                    >
+                      Update
+                    </Button>
                     <Button
                       variant="outline-danger"
                       onClick={function onEpisodeListDeleteClick(event) {

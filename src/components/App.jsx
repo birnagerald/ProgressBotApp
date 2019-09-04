@@ -1,16 +1,18 @@
-import React from "react";
-import { Route, Switch } from "react-router";
-import LoginForm from "./LoginForm";
-import AnimeListContainer from "./AnimeListContainer";
-import AnimeContainer from "./AnimeContainer";
-import Header from "./Header";
-import Footer from "./Footer";
-import Main from "./Main";
-import { userProfileFetch, userSetId, userLogout } from "../actions/actions";
-import { requests } from "../agent";
-import { connect } from "react-redux";
-import "./GlobalCss.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import React from "react";
+import { connect } from "react-redux";
+import { Route, Switch } from "react-router";
+import { userLogout, userProfileFetch, userSetId } from "../actions/actions";
+import { requests } from "../agent";
+import AnimeContainer from "./AnimeContainer";
+import AnimeListContainer from "./AnimeListContainer";
+import Footer from "./Footer";
+import "./GlobalCss.css";
+import Header from "./Header";
+import LoginForm from "./LoginForm";
+import Main from "./Main";
+import AnimeFormContainer from "./AnimeFormContainer";
+import EpisodeFormContainer from "./EpisodeFormContainer";
 
 const mapStateToProps = state => ({
   ...state.auth
@@ -60,6 +62,11 @@ class App extends React.Component {
         />
         <Switch>
           <Route path="/login" component={LoginForm} />
+          <Route
+            path="/anime/:id/episode/update/:id2"
+            component={EpisodeFormContainer}
+          />
+          <Route path="/anime/update/:id" component={AnimeFormContainer} />
           <Route path="/anime/:id" component={AnimeContainer} />
           <Route path="/dashboard" component={AnimeListContainer} />
           <Route path="/" component={Main} />

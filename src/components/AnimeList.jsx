@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import Message from "./Message";
+import { Button, ButtonToolbar } from "react-bootstrap";
 import "./AnimeList.css";
 
 const AnimeList = props => {
@@ -22,16 +23,23 @@ const AnimeList = props => {
                   <h3>
                     <Link to={`/anime/${anime.id}`}>{anime.title}</Link>
                   </h3>
-
-                  <button
-                    className="btn btn-outline-danger btn-sm"
-                    onClick={function onAnimeDeleteClick(event) {
-                      event.preventDefault();
-                      deleteHandler(anime.id);
-                    }}
-                  >
-                    Remove
-                  </button>
+                  <ButtonToolbar>
+                    <Button
+                      variant="outline-info"
+                      href={`/anime/update/${anime.id}`}
+                    >
+                      Update
+                    </Button>
+                    <Button
+                      variant="outline-danger"
+                      onClick={function onAnimeDeleteClick(event) {
+                        event.preventDefault();
+                        deleteHandler(anime.id);
+                      }}
+                    >
+                      Remove
+                    </Button>
+                  </ButtonToolbar>
                 </div>
               </div>
             </CSSTransition>

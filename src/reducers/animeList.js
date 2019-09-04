@@ -37,6 +37,7 @@ export default (state = { animes: null, isFetching: false }, action) => {
         ...state,
         animes: state.animes.filter(anime => anime.id !== action.animeId)
       };
+
     default:
       return state;
   }

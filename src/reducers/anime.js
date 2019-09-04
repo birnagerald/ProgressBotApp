@@ -2,7 +2,8 @@ import {
   ANIME_REQUEST,
   ANIME_RECEIVED,
   ANIME_ERROR,
-  ANIME_UNLOAD
+  ANIME_UNLOAD,
+  ANIME_UPDATED
 } from "../actions/constants";
 
 export default (state = { anime: null, isFetching: false }, action) => {
@@ -23,6 +24,12 @@ export default (state = { anime: null, isFetching: false }, action) => {
       return {
         ...state,
         anime: null,
+        isFetching: false
+      };
+    case ANIME_UPDATED:
+      return {
+        ...state,
+        anime: action.anime,
         isFetching: false
       };
     default:
