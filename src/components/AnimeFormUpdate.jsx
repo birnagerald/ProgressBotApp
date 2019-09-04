@@ -16,6 +16,7 @@ class AnimeFormUpdate extends React.Component {
       values.title,
       values.totalEpisode,
       values.coverImage,
+      values.thumbnail,
       ownerId,
       Id
     ).then(() => reset());
@@ -55,6 +56,14 @@ class AnimeFormUpdate extends React.Component {
             <Field
               label="Cover Image"
               name="coverImage"
+              component={renderField}
+              className="form-control"
+              type="text"
+            />
+
+            <Field
+              label="Thumbnail"
+              name="thumbnail"
               component={renderField}
               className="form-control"
               type="text"

@@ -57,6 +57,14 @@ class AnimeForm extends React.Component {
               className="form-control"
               type="text"
             />
+
+            <Field
+              label="Thumbnail"
+              name="thumbnail"
+              component={renderField}
+              className="form-control"
+              type="text"
+            />
           </div>
 
           <button

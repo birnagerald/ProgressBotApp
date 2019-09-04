@@ -88,13 +88,20 @@ export const animeAdded = anime => ({
   anime
 });
 
-export const animeAdd = (title, totalEpisode, coverImage, OwnerId) => {
+export const animeAdd = (
+  title,
+  totalEpisode,
+  coverImage,
+  thumbnail,
+  OwnerId
+) => {
   return dispatch => {
     return requests
       .post(`/animes`, {
         title: title,
         totalEpisode: totalEpisode,
         coverImage: coverImage,
+        thumbnail: thumbnail,
         owner: `/api/users/${OwnerId}`
       })
       .then(response => dispatch(animeAdded(response)))
@@ -112,13 +119,21 @@ export const animeUpdated = anime => ({
   anime
 });
 
-export const animeUpdate = (title, totalEpisode, coverImage, OwnerId, id) => {
+export const animeUpdate = (
+  title,
+  totalEpisode,
+  coverImage,
+  thumbnail,
+  OwnerId,
+  id
+) => {
   return dispatch => {
     return requests
       .put(`/animes/${id}`, {
         title: title,
         totalEpisode: totalEpisode,
         coverImage: coverImage,
+        thumbnail: thumbnail,
         owner: `/api/users/${OwnerId}`
       })
       .then(response => dispatch(animeUpdated(response)))
@@ -306,11 +321,10 @@ export const episodeSync = (episode, anime) => {
               text: `@KnK`
             },
             thumbnail: {
-              url: `https://images-ext-1.discordapp.net/external/A8S3rmXCFjMYo3Fgixt-4qb48Jbp89fj7naH1etgl2o/https/pbs.twimg.com/media/D3___vjXoAA93oz.jpg%3Alarge`
+              url: anime.thumbnail
             },
             image: {
-              url:
-                "https://images-ext-2.discordapp.net/external/I0AngD3QRYISq35VqQ3bK84JrqXKHYdGhlII49eTeoY/https/kodoku-no-kawarini.moe/assets/img/caroltuesdayaffiche.jpg"
+              url: anime.coverImage
             },
             author: {
               name: anime.title,
