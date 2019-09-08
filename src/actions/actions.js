@@ -93,6 +93,7 @@ export const animeAdd = (
   totalEpisode,
   coverImage,
   thumbnail,
+  webhook,
   OwnerId
 ) => {
   return dispatch => {
@@ -102,6 +103,7 @@ export const animeAdd = (
         totalEpisode: totalEpisode,
         coverImage: coverImage,
         thumbnail: thumbnail,
+        webhook: webhook,
         owner: `/api/users/${OwnerId}`
       })
       .then(response => dispatch(animeAdded(response)))
@@ -124,6 +126,7 @@ export const animeUpdate = (
   totalEpisode,
   coverImage,
   thumbnail,
+  webhook,
   OwnerId,
   id
 ) => {
@@ -134,6 +137,7 @@ export const animeUpdate = (
         totalEpisode: totalEpisode,
         coverImage: coverImage,
         thumbnail: thumbnail,
+        webhook: webhook,
         owner: `/api/users/${OwnerId}`
       })
       .then(response => dispatch(animeUpdated(response)))
@@ -308,61 +312,52 @@ export const episodeRemoved = id => ({
 export const episodeSync = (episode, anime) => {
   const timestamp = new Date(); // This would be the timestamp you want to format
   return requests
-    .postCustom(
-      `https://discordapp.com/api/webhooks/614430341456986112/pc1Ac720a98QQktlEqyZmMxYo0NZimhahc1vyqnL7mTnqYi85EVUN0S-7WpQbIbtsSFi`,
-      {
-        embeds: [
-          {
-            description: `Épisode ${episode.number}/${anime.totalEpisode}`,
-            color: 14177041,
-            timestamp: timestamp.toISOString(),
-            footer: {
-              icon_url: `https://cdn.discordapp.com/emojis/469823712720322560.png?v=1`,
-              text: `@KnK`
+    .postCustom(anime.webhook, {
+      embeds: [
+        {
+          description: `Épisode ${episode.number}/${anime.totalEpisode}`,
+          color: 14177041,
+          timestamp: timestamp.toISOString(),
+          footer: {
+            icon_url: ``,
+            text: ``
+          },
+          thumbnail: {
+            url: anime.thumbnail
+          },
+          image: {
+            url: anime.coverImage
+          },
+          author: {
+            name: anime.title
+          },
+          fields: [
+            {
+              name: `Avancement:`,
+              value: `\n**Trad** : ${
+                episode.translation ? ":white_check_mark:" : ":x:"
+              } \n**Time** : ${
+                episode.time ? ":white_check_mark:" : ":x:"
+              }\n**Check** : ${
+                episode.proofreading ? ":white_check_mark:" : ":x:"
+              }\n**Adapt** : ${episode.edition ? ":white_check_mark:" : ":x:"}`,
+              inline: true
             },
-            thumbnail: {
-              url: anime.thumbnail
-            },
-            image: {
-              url: anime.coverImage
-            },
-            author: {
-              name: anime.title,
-              url: `https://kodoku-no-kawarini.moe/carole-and-tuesday.php`,
-              icon_url: `https://kodoku-no-kawarini.moe/assets/img/tuturu.png`
-            },
-            fields: [
-              {
-                name: `Avancement:`,
-                value: `\n**Trad** : ${
-                  episode.translation ? ":white_check_mark:" : ":x:"
-                } \n**Time** : ${
-                  episode.time ? ":white_check_mark:" : ":x:"
-                }\n**Check** : ${
-                  episode.proofreading ? ":white_check_mark:" : ":x:"
-                }\n**Adapt** : ${
-                  episode.edition ? ":white_check_mark:" : ":x:"
-                }`,
-                inline: true
-              },
-              {
-                name: `Publié: ${
-                  episode.published ? ":white_check_mark:" : ":x:"
-                }`,
-                value: `\n**Edit** : ${
-                  episode.typeset ? ":white_check_mark:" : ":x:"
-                }\n**Qcheck** : ${
-                  episode.qualityCheck ? ":white_check_mark:" : ":x:"
-                }\n**Enco** : ${
-                  episode.encoding ? ":white_check_mark:" : ":x:"
-                }`,
-                inline: true
-              }
-            ]
-          }
-        ]
-      }
-    )
+            {
+              name: `Publié: ${
+                episode.published ? ":white_check_mark:" : ":x:"
+              }`,
+              value: `\n**Edit** : ${
+                episode.typeset ? ":white_check_mark:" : ":x:"
+              }\n**Qcheck** : ${
+                episode.qualityCheck ? ":white_check_mark:" : ":x:"
+              }\n**Enco** : ${episode.encoding ? ":white_check_mark:" : ":x:"}`,
+              inline: true
+            }
+          ]
+        }
+      ]
+    })
     .then(res => {
       res = res.status;
       // res.body, res.headers, res.status

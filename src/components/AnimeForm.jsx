@@ -15,6 +15,8 @@ class AnimeForm extends React.Component {
       values.title,
       values.totalEpisode,
       values.coverImage,
+      values.thumbnail,
+      values.webhook,
       ownerId
     ).then(() => reset());
   }
@@ -61,6 +63,14 @@ class AnimeForm extends React.Component {
             <Field
               label="Thumbnail"
               name="thumbnail"
+              component={renderField}
+              className="form-control"
+              type="text"
+            />
+
+            <Field
+              label="Webhook"
+              name="webhook"
               component={renderField}
               className="form-control"
               type="text"
